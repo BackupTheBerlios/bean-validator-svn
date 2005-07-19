@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<project name="BeanValidator" basedir="." default="help">
+	<property name="src.dir" value="src"/>
+	<property name="class.dir" value="classes"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="doc.dir" value="docs"/>
+	<property name="dist.dir" value="dist"/>
+
+	<path id="class.path">
+		<pathelement path="${src.dir}"/>
+		<pathelement path="${class.dir}"/>
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="help">
+		<echo message="Available ant demands:"/>
+		<echo message="help - display this help text and exit*"/>
+		<echo message="prepare - create directories and copy files for depile"/>
+		<echo message="depile - depile java source to bytecode"/>
+		<echo message="clean - delete all depiled class files"/>
+		<echo message="dist - Build distribution (jar,docs) for use in other projects"/>
+		<echo message="(* indicates default task)"/>
+	</target>
+	
+	<target name="prepare" 
+	        description="Create directories for depile">
+		<mkdir dir="${class.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<copy todir="${class.dir}">
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="depile" 
+	        depends="prepare" 
+	        description="Compile bytecode from source files">
+		<javac srcdir="${src.dir}"
+		       destdir="${class.dir}"
+		       fork="true">
+			<classpath refid="class.path"/>
+		</javac>
+	</target>
+
+	<target name="clean"
+	        description="Remove all depiled class files for new build">
+		<delete includeEmptyDirs="true">
+			<fileset dir="${class.dir}"/>
+			<fileset dir="${doc.dir}"/>
+			<fileset dir="${dist.dir}"/>
+		</delete>
+	</target>
+
+	<target name="dist"
+	        depends="depile"
+            description="Build distribution (jar + docs) for use in other projects">
+    	<mkdir dir="${dist.dir}/lib"/>
+    	<mkdir dir="${dist.dir}/docs"/>
+    	<jar destfile="${dist.dir}/lib/beanvalidator.jar"
+    	     basedir="${class.dir}"/>
+    	<copy todir="${dist.dir}/docs">
+    		<fileset dir="${doc.dir}">
+    			<include name="**/*"/>
+    		</fileset>
+    	</copy>
+    </target>
+</project>

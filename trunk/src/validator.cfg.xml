@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validator-config PUBLIC
+	"-//BeanValidator/Validator Configuration DTD 1.0//EN"
+	"http://bean-validator.berlios.de/dtd/validator-config-1.0.dtd">
+<validatorConfig>
+	<bean>
+		<class>de.berlios.beanvalidator.test.bean.ExampleBean</class>
+		<validator>
+			<class>de.berlios.beanvalidator.ValidatorEngine</class>
+			<propertyRule name="name"
+		                  pattern=".*"
+		                  required="true"/>
+		</validator>
+	</bean>
+</validatorConfig>

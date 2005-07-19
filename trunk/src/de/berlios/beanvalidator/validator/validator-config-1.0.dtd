@@ -1,0 +1,17 @@
+<!-- 
+<!DOCTYPE validator-config PUBLIC
+	"-//BeanValidator/Validator Configuration DTD 1.0//EN"
+	"http://bean-validator.berlios.de/dtd/validator-config-1.0.dtd">
+-->
+<!ELEMENT validatorConfig (bean+)>
+
+<!ELEMENT bean (class,validator)>
+
+<!ELEMENT class (#PCDATA)>
+
+<!ELEMENT validator (class,propertyRule+)>
+
+<!ELEMENT propertyRule EMPTY>
+	<!ATTLIST propertyRule name CDATA #REQUIRED>
+	<!ATTLIST propertyRule pattern CDATA #REQUIRED>
+	<!ATTLIST propertyRule required (true|false) "false">
